@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🟤 Soil Type Prediction - AI Agronomy</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/upload">🍃 Plant Diagnosis</a>
+    <a href="/crop_recommendation">🌾 Crop Recommendation</a>
+  </nav>
+
+  <h1 class="page-title" style="background: linear-gradient(135deg, #ffffff 0%, #ffd8be 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🟤 AI Soil Classifier</h1>
+  <p class="page-subtitle">Upload a photo of your soil sample to determine its classification, texture, advantages, and optimal crops.</p>
+
+  <div class="form-container form-container-soil">
+    <form action="/soil_predict" method="POST" enctype="multipart/form-data">
+      <div class="upload-area" onclick="document.getElementById('soil_file').click()">
+        <div class="upload-icon">📷</div>
+        <span id="upload-text">Drag & drop or Click to choose Soil image</span>
+        <input type="file" id="soil_file" name="file" accept="image/*" required onchange="previewImage(event)" style="display: none;">
+      </div>
+      
+      <img id="preview" alt="Soil Image Preview" />
+      
+      <button type="submit" class="btn" style="background: var(--soil-gradient); color: white; width: 100%; margin-top: 10px; padding: 14px 0; box-shadow: 0 4px 12px rgba(208, 124, 61, 0.3);">Classify Soil Type</button>
+    </form>
+  </div>
+
+  <!-- Guidelines Instructions Card -->
+  <div class="instructions-section" style="border-color: var(--soil-border);">
+    <h2 style="color: var(--soil-accent-light);">🧭 Guidelines for High-Accuracy Soil Prediction</h2>
+    <ul>
+      <li><strong>Clear Lighting:</strong> Take the photo under natural sunlight or bright, direct indoor lighting. Avoid shadows.</li>
+      <li><strong>Dry/Consistent State:</strong> Ensure the soil sample is representative. Extremes of mud or dry dust may affect color prediction.</li>
+      <li><strong>Focus & Close-up:</strong> Position the camera 6 to 12 inches directly above the soil surface so the texture is clearly visible.</li>
+      <li><strong>Clean Sample:</strong> Clear away loose leaves, large stones, twigs, or weeds from the frame before snapping the photo.</li>
+    </ul>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const output = document.getElementById('preview');
+        output.src = reader.result;
+        output.style.display = 'block';
+        
+        // Show selected file name in the upload area
+        const fileName = event.target.files[0].name;
+        document.getElementById('upload-text').innerText = "Selected: " + fileName;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+
+</body>
+</html>

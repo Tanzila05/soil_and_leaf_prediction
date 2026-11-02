@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌿 Leaf Disease Detection - Smart Agriculture</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/soil_analysis">🟤 Soil Classifier</a>
+    <a href="/crop_recommendation">🌾 Crop Recommendation</a>
+  </nav>
+
+  <h1 class="page-title">🌿 Leaf Disease Diagnosis</h1>
+  <p class="page-subtitle">Upload a clear photograph of a plant leaf to instantly analyze and diagnose potential disease infestations.</p>
+
+  <div class="form-container">
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+      <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <div class="upload-icon">📷</div>
+        <span id="upload-text">Drag & drop or Click to choose Leaf image</span>
+        <input type="file" id="file-input" name="file" accept="image/*" required onchange="previewImage(event)" style="display: none;">
+      </div>
+      
+      <img id="preview" alt="Leaf Image Preview" />
+      
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 14px 0;">Predict Disease</button>
+    </form>
+  </div>
+
+  <!-- Guidelines Instructions Card -->
+  <div class="instructions-section">
+    <h2>🧭 Guidelines for High-Accuracy Leaf Diagnosis</h2>
+    <ol>
+      <li><strong>Focus on a single leaf:</strong> Position the leaf flat and central in the camera frame. Multiple leaves or busy backgrounds can confuse the model.</li>
+      <li><strong>Ensure adequate lighting:</strong> Avoid dark shadows or strong backlighting. Natural daylight or a bright indoor lamp works best.</li>
+      <li><strong>Capture texture details:</strong> Hold the camera stable and tap the screen to focus. Avoid blurry, out-of-focus, or shaking images.</li>
+      <li><strong>Avoid extreme conditions:</strong> Extremely wet leaves or heavily withered parts may alter color representations. Choose representative spots.</li>
+    </ol>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const output = document.getElementById('preview');
+        output.src = reader.result;
+        output.style.display = 'block';
+        
+        // Show selected file name in the upload area
+        const fileName = event.target.files[0].name;
+        document.getElementById('upload-text').innerText = "Selected: " + fileName;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+
+</body>
+</html>

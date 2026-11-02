@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Recommendation - Smart Agriculture</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/upload">🍃 Plant Diagnosis</a>
+    <a href="/soil_analysis">🟤 Soil Classifier</a>
+  </nav>
+
+  <h1 class="page-title">🌾 Optimal Crop Recommendation</h1>
+  <p class="page-subtitle">Enter your soil nutrient levels and regional climate indicators to find the most suitable crop to cultivate.</p>
+
+  <div class="form-container" style="max-width: 850px;">
+    <form action="/crop_recommend" method="POST" class="form-grid">
+      
+      <!-- Nitrogen -->
+      <div class="form-group">
+        <label for="n_val">Nitrogen (N) <span class="range-hint">Range: 0 - 150 mg/kg</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="n_range" min="0" max="150" value="70" oninput="syncInputs('n_range', 'n_val')">
+          <input type="number" id="n_val" name="n" min="0" max="150" value="70" required oninput="syncInputs('n_val', 'n_range')">
+        </div>
+      </div>
+
+      <!-- Phosphorus -->
+      <div class="form-group">
+        <label for="p_val">Phosphorus (P) <span class="range-hint">Range: 5 - 150 mg/kg</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="p_range" min="5" max="150" value="50" oninput="syncInputs('p_range', 'p_val')">
+          <input type="number" id="p_val" name="p" min="5" max="150" value="50" required oninput="syncInputs('p_val', 'p_range')">
+        </div>
+      </div>
+
+      <!-- Potassium -->
+      <div class="form-group">
+        <label for="k_val">Potassium (K) <span class="range-hint">Range: 5 - 250 mg/kg</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="k_range" min="5" max="250" value="50" oninput="syncInputs('k_range', 'k_val')">
+          <input type="number" id="k_val" name="k" min="5" max="250" value="50" required oninput="syncInputs('k_val', 'k_range')">
+        </div>
+      </div>
+
+      <!-- pH -->
+      <div class="form-group">
+        <label for="ph_val">Soil pH <span class="range-hint">Range: 4.0 - 9.0</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="ph_range" min="4.0" max="9.0" step="0.1" value="6.5" oninput="syncInputs('ph_range', 'ph_val')">
+          <input type="number" id="ph_val" name="ph" min="4.0" max="9.0" step="0.1" value="6.5" required oninput="syncInputs('ph_val', 'ph_range')">
+        </div>
+      </div>
+
+      <!-- Temperature -->
+      <div class="form-group">
+        <label for="temp_val">Temperature (°C) <span class="range-hint">Range: 10 - 45 °C</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="temp_range" min="10" max="45" value="25" oninput="syncInputs('temp_range', 'temp_val')">
+          <input type="number" id="temp_val" name="temp" min="10" max="45" value="25" required oninput="syncInputs('temp_val', 'temp_range')">
+        </div>
+      </div>
+
+      <!-- Humidity -->
+      <div class="form-group">
+        <label for="humidity_val">Humidity (%) <span class="range-hint">Range: 20 - 100 %</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="humidity_range" min="20" max="100" value="70" oninput="syncInputs('humidity_range', 'humidity_val')">
+          <input type="number" id="humidity_val" name="humidity" min="20" max="100" value="70" required oninput="syncInputs('humidity_val', 'humidity_range')">
+        </div>
+      </div>
+
+      <!-- Rainfall -->
+      <div class="form-group-full">
+        <label for="rainfall_val">Rainfall (mm) <span class="range-hint">Range: 20 - 350 mm</span></label>
+        <div class="input-sync-container">
+          <input type="range" id="rainfall_range" min="20" max="350" value="120" oninput="syncInputs('rainfall_range', 'rainfall_val')">
+          <input type="number" id="rainfall_val" name="rainfall" min="20" max="350" value="120" required oninput="syncInputs('rainfall_val', 'rainfall_range')">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-group-full" style="padding: 14px 0; margin-top: 15px;">Recommend Optimal Crop</button>
+    </form>
+  </div>
+
+  <script>
+    function syncInputs(sourceId, targetId) {
+      const source = document.getElementById(sourceId);
+      const target = document.getElementById(targetId);
+      target.value = source.value;
+    }
+  </script>
+
+</body>
+</html>

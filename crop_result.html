@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommended Crop Result - Smart Agriculture</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/upload">🍃 Plant Diagnosis</a>
+    <a href="/soil_analysis">🟤 Soil Classifier</a>
+    <a href="/crop_recommendation">🌾 Crop Recommendation</a>
+  </nav>
+
+  <h1 class="page-title">🩺 Crop Recommendation Report</h1>
+  <p class="page-subtitle">Here is the deep learning advisory report mapping your soil properties to optimal crop selections.</p>
+
+  <div class="form-container" style="max-width: 850px; display: flex; flex-direction: column; align-items: center;">
+    
+    <div class="result-banner" style="margin-bottom: 25px;">
+      <p>RECOMMENDED CROP TO CULTIVATE:</p>
+      <h1 style="font-size: 2.2rem; margin: 5px 0 8px 0; color: var(--accent-light);">{{ result.title }}</h1>
+      <span class="confidence-pill">{{ "%.2f" | format(result.confidence * 100) }}% Model Match Confidence</span>
+    </div>
+
+    <div class="details-card" style="margin-bottom: 25px; padding: 25px 20px;">
+      <h3>📈 User Inputs Summary</h3>
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Nitrogen</th>
+            <th>Phosphorus</th>
+            <th>Potassium</th>
+            <th>Soil pH</th>
+            <th>Temp (°C)</th>
+            <th>Humidity (%)</th>
+            <th>Rainfall (mm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ inputs.n }}</td>
+            <td>{{ inputs.p }}</td>
+            <td>{{ inputs.k }}</td>
+            <td>{{ inputs.ph }}</td>
+            <td>{{ inputs.temp }}</td>
+            <td>{{ inputs.humidity }}</td>
+            <td>{{ inputs.rainfall }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>🔬 Crop Adaptation & Ideal Conditions</h3>
+      <p>{{ result.optimal_conditions }}</p>
+
+      <h3>🗓️ Growth Cycle & Key Stages</h3>
+      <ol class="growth-list">
+        {% for stage in result.growth_stages %}
+          <li>{{ stage }}</li>
+        {% endfor %}
+      </ol>
+
+      <h3>🧪 Fertilizer Management Plan</h3>
+      <p>{{ result.fertilizer }}</p>
+    </div>
+
+    <div class="action-links">
+      <a href="/crop_recommendation" class="btn btn-secondary">🔙 Test New Metrics</a>
+      <a href="/" class="btn btn-primary">🏠 Back to Dashboard</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

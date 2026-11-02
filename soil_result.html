@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soil Analysis Result - Smart Agriculture</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/upload">🍃 Plant Diagnosis</a>
+    <a href="/soil_analysis">🟤 Soil Classifier</a>
+    <a href="/crop_recommendation">🌾 Crop Choice</a>
+  </nav>
+
+  <h1 class="page-title" style="background: linear-gradient(135deg, #ffffff 0%, #ffd8be 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🟤 Soil Analysis Report</h1>
+  <p class="page-subtitle">Here is the deep learning diagnostic report for the uploaded soil sample.</p>
+
+  <div class="form-container form-container-soil" style="max-width: 800px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+    <img src="{{ image_file }}" alt="Uploaded Soil" style="display: block; max-width: 320px; width: 100%; border-radius: 16px; box-shadow: var(--shadow-base); border: 3px solid rgba(255, 255, 255, 0.1); margin-bottom: 25px;">
+
+    <div class="result-banner result-banner-soil" style="margin-bottom: 25px;">
+      <p>Identified Soil Profile:</p>
+      <h1 style="font-size: 1.8rem; margin: 5px 0 8px 0; color: var(--soil-accent-light);">{{ result.title }}</h1>
+      <span class="confidence-pill">{{ "%.2f" | format(result.confidence * 100) }}% Classifier Match</span>
+    </div>
+
+    <div class="details-card details-card-soil" style="margin-bottom: 25px; padding: 25px 20px;">
+      <h3>🔬 Physical & Chemical Properties</h3>
+      <p>{{ result.properties }}</p>
+
+      <h3>✅ Agricultural Advantages</h3>
+      <p>{{ result.advantages }}</p>
+
+      <h3>⚠️ Drawbacks & Limitations</h3>
+      <p>{{ result.drawbacks }}</p>
+
+      <h3>🛠️ Recommended Soil Improvements</h3>
+      <p>{{ result.improvement }}</p>
+
+      <h3>🌾 Optimal Crops to Plant</h3>
+      <p style="margin-bottom: 10px;">The following crops are highly suited for this soil type:</p>
+      <div class="badge-container">
+        {% for crop in result.crops.split(',') %}
+          <span class="badge-item">🌾 {{ crop.strip() }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="action-links">
+      <a href="/soil_analysis" class="btn btn-secondary">🔙 Analyze Another Sample</a>
+      <a href="/" class="btn btn-primary" style="background: var(--soil-gradient); box-shadow: 0 4px 12px rgba(208, 124, 61, 0.25);">🏠 Back to Dashboard</a>
+    </div>
+  </div>
+
+</body>
+</html>

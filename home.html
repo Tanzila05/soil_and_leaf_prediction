@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture AI - Home Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <h1 class="page-title">🌿 Smart Agriculture AI</h1>
+  <p class="page-subtitle">Providing end-to-end intelligent support for crops, soils, and diseases.</p>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
+    
+    <!-- Disease Detection Card -->
+    <div class="card card-disease">
+      <div class="card-icon">🍃</div>
+      <h3 class="card-title">Leaf Disease Diagnosis</h3>
+      <p class="card-description">Upload leaf images to instantly detect diseases, get database-driven precautions, and browse medicine purchasing links.</p>
+      <a href="/upload" class="btn card-btn">Diagnose Leaf</a>
+    </div>
+
+    <!-- Soil Analysis Card -->
+    <div class="card card-soil">
+      <div class="card-icon">🟤</div>
+      <h3 class="card-title">Soil Classifier</h3>
+      <p class="card-description">Scan soil samples to analyze physical/chemical qualities, learn improvement tips, and discover optimal crop pairings.</p>
+      <a href="/soil_analysis" class="btn card-btn">Classify Soil</a>
+    </div>
+
+    <!-- Crop Recommendation Card -->
+    <div class="card card-crop">
+      <div class="card-icon">🌾</div>
+      <h3 class="card-title">Crop Recommendation</h3>
+      <p class="card-description">Input N, P, K soil parameters and climate indicators to scientifically match your land with the highest yielding crop.</p>
+      <a href="/crop_recommendation" class="btn card-btn">Recommend Crop</a>
+    </div>
+
+  </div>
+
+  <!-- Educational Background Info Section -->
+  <div class="info-section">
+    <div class="info-block">
+      <h2>🎯 Purpose of Smart Agriculture AI</h2>
+      <p class="info-text">Smart Agriculture AI is an integrated precision farming platform designed to optimize crop diagnostics, soil health analysis, and yield optimization. By leveraging advanced machine learning, the tool assists home gardeners, students, and agricultural researchers in making informed, data-driven decisions that minimize resource waste and protect crop output.</p>
+    </div>
+
+    <div class="info-block">
+      <h2>📉 Importance of Early Profiling</h2>
+      <p class="info-text">Undetected crop diseases spread rapidly, resulting in massive yield losses. At the same time, sowing crops in soils with unsuitable nitrogen, phosphorus, potassium, or pH values leads to stunting and failure. Smart Agriculture AI solves both challenges, ensuring you plant the right crop for your soil and diagnose leaf issues immediately.</p>
+    </div>
+
+    <div class="info-block">
+      <h2>🧬 Behind the Machine Learning</h2>
+      <p class="info-text">Our system uses dual neural network structures: a Convolutional Neural Network (CNN) trained on high-density leaf textures and soil imagery, and a Feed-Forward Deep Neural Network (DNN) that maps soil chemical configurations (NPK) and climate variables to optimal plant adaptation profiles.</p>
+    </div>
+  </div>
+
+  <!-- Footer Links Section -->
+  <footer class="footer-links">
+    <h3>📖 Learn More & Agricultural Resources</h3>
+    <div class="footer-nav">
+      <a href="https://icar.org.in/" target="_blank">🌐 India Agriculture Info (ICAR)</a>
+      <a href="https://plantvillage.psu.edu/" target="_blank">🍃 PlantVillage Database</a>
+      <a href="https://ipm.ucanr.edu/#gsc.tab=0" target="_blank">🪲 IPM Pest Network</a>
+      <a href="https://en.wikipedia.org/wiki/Plant_disease" target="_blank">📚 Wikipedia Plant Pathology</a>
+    </div>
+  </footer>
+
+  <!-- Chatbot UI Widget -->
+  <div id="chatbot-container">
+    <div id="chat-icon" onclick="toggleChat()">💬</div>
+    <div id="chat-window">
+      <div id="chat-header">
+        <span>🤖 PlantBot Assistant</span>
+        <span class="close-btn" onclick="toggleChat()">✖</span>
+      </div>
+      <div id="chat-body"></div>
+      <input type="text" id="user-input" placeholder="Ask about crops, soils or leaf diseases..." onkeydown="if(event.key==='Enter') sendMessage()">
+    </div>
+  </div>
+
+  <script>
+    function toggleChat() {
+      const chatWindow = document.getElementById("chat-window");
+      chatWindow.classList.toggle("active");
+      if (chatWindow.classList.contains("active")) {
+        const chatBody = document.getElementById("chat-body");
+        if (chatBody.children.length === 0) {
+          chatBody.innerHTML = `<div class="chat-msg bot-msg">Hello! I am PlantBot. I can answer questions about crops, soil conditions, recommended fertilizers, and leaf diseases. Try asking me something like 'what is sandy soil?' or 'how to grow rice?'! 🌾</div>`;
+        }
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatBody = document.getElementById("chat-body");
+      chatBody.innerHTML += `<div class="chat-msg user-msg">${message}</div>`;
+      input.value = "";
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        chatBody.innerHTML += `<div class="chat-msg bot-msg">${data.response}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+      })
+      .catch(err => {
+        console.error("Chat error:", err);
+        chatBody.innerHTML += `<div class="chat-msg bot-msg">Sorry, I'm having trouble connecting right now. 🤖</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+      });
+    }
+  </script>
+
+</body>
+</html>

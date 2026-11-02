@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Result - Smart Agriculture</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="/">🏠 Home Dashboard</a>
+    <a href="/upload">🍃 Plant Diagnosis</a>
+    <a href="/soil_analysis">🟤 Soil Classifier</a>
+    <a href="/crop_recommendation">🌾 Crop Choice</a>
+  </nav>
+
+  <h1 class="page-title">🩺 Prediction Result</h1>
+  <p class="page-subtitle">Here is the deep learning diagnostic report for the uploaded plant leaf sample.</p>
+
+  <div class="form-container" style="max-width: 800px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+    <img src="{{ image_file }}" alt="Uploaded Leaf" style="display: block; max-width: 320px; width: 100%; border-radius: 16px; box-shadow: var(--shadow-base); border: 3px solid rgba(255, 255, 255, 0.1); margin-bottom: 25px;">
+
+    <div class="result-banner" style="margin-bottom: 25px;">
+      <p>Detected Plant/Disease Condition:</p>
+      <h1 style="font-size: 1.8rem; margin: 5px 0 0 0; color: var(--accent-light);">{{ disease }}</h1>
+    </div>
+
+    <div class="details-card" style="margin-bottom: 25px; padding: 25px 20px;">
+      <h3>⚠️ Recommended Precautions & Sanitation</h3>
+      <p>{{ precautions }}</p>
+
+      <h3>💊 Treatment & Medication Options</h3>
+      <p style="margin-bottom: 10px;">Select any medication below to browse purchasing options or research additional instructions:</p>
+      <div class="badge-container">
+        {% for med in medicines %}
+          <a href="https://www.google.com/search?q={{ med | urlencode }}+buy" target="_blank" class="badge-item">🛒 {{ med }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="action-links">
+      <a href="/upload" class="btn btn-secondary">🔙 Diagnose Another Leaf</a>
+      <a href="/" class="btn btn-primary">🏠 Back to Dashboard</a>
+    </div>
+  </div>
+
+</body>
+</html>
